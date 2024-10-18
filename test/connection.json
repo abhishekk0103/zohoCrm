@@ -1,0 +1,10 @@
+{
+  "id": "testConnectionId",
+  "userAccountId": "testUserAccountId",
+  "oauthToken": {
+    "accessToken": "1000.df11971253b8b1015eabe3af4b5fec04.683ec1efb6ff12a9cd7ac2d2c2a2b0c7",
+    "refreshToken": "1000.6c64243600a9fba62e0cf6d86622a53e.3f5e9f2f65b37289ab3461ef08d72730",
+    "expires": 3600
+  },
+  "input": {}
+}
