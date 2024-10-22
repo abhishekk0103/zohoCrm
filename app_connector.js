@@ -211,6 +211,15 @@ const app = {
               inputObj.required = res.system_mandatory;
               inputObj.type = "string"
               inputObj.controlType = "text"
+
+              if(res.data_type == "picklist"){
+                inputObj.controlType = "select"
+                if(res.pick_list_values.length != 0){
+                  inputObj.pickList = res.pick_list_values.map((val) => {
+                    return[val.display_value, val.reference_value];
+                  })
+                }
+              }
               
               intput_fields.push(inputObj);
             }
