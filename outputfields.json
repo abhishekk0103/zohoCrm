@@ -1,0 +1,151 @@
+[
+  {
+    "key": "data",
+    "name": "Data",
+    "hintText": "Data",
+    "helpText": "Data",
+    "isExtendedSchema": false,
+    "required": false,
+    "type": "array",
+    "controlType": "array",
+    "as": "object",
+    "properties": [
+      {
+        "key": "code",
+        "name": "Code",
+        "hintText": "Code",
+        "helpText": "Code",
+        "isExtendedSchema": false,
+        "required": false,
+        "type": "string",
+        "controlType": "text"
+      },
+      {
+        "key": "details",
+        "name": "Details",
+        "hintText": "Details",
+        "helpText": "Details",
+        "isExtendedSchema": false,
+        "required": false,
+        "type": "object",
+        "controlType": "object",
+        "properties": [
+          {
+            "key": "Modified_Time",
+            "name": "Modified Time",
+            "hintText": "Modified Time",
+            "helpText": "Modified Time",
+            "isExtendedSchema": false,
+            "required": false,
+            "type": "string",
+            "controlType": "text"
+          },
+          {
+            "key": "Modified_By",
+            "name": "Modified By",
+            "hintText": "Modified By",
+            "helpText": "Modified By",
+            "isExtendedSchema": false,
+            "required": false,
+            "type": "object",
+            "controlType": "object",
+            "properties": [
+              {
+                "key": "name",
+                "name": "Name",
+                "hintText": "Name",
+                "helpText": "Name",
+                "isExtendedSchema": false,
+                "required": false,
+                "type": "string",
+                "controlType": "text"
+              },
+              {
+                "key": "id",
+                "name": "Id",
+                "hintText": "Id",
+                "helpText": "Id",
+                "isExtendedSchema": false,
+                "required": false,
+                "type": "string",
+                "controlType": "text"
+              }
+            ]
+          },
+          {
+            "key": "Created_Time",
+            "name": "Created Time",
+            "hintText": "Created Time",
+            "helpText": "Created Time",
+            "isExtendedSchema": false,
+            "required": false,
+            "type": "string",
+            "controlType": "text"
+          },
+          {
+            "key": "id",
+            "name": "Id",
+            "hintText": "Id",
+            "helpText": "Id",
+            "isExtendedSchema": false,
+            "required": false,
+            "type": "string",
+            "controlType": "text"
+          },
+          {
+            "key": "Created_By",
+            "name": "Created By",
+            "hintText": "Created By",
+            "helpText": "Created By",
+            "isExtendedSchema": false,
+            "required": false,
+            "type": "object",
+            "controlType": "object",
+            "properties": [
+              {
+                "key": "name",
+                "name": "Name",
+                "hintText": "Name",
+                "helpText": "Name",
+                "isExtendedSchema": false,
+                "required": false,
+                "type": "string",
+                "controlType": "text"
+              },
+              {
+                "key": "id",
+                "name": "Id",
+                "hintText": "Id",
+                "helpText": "Id",
+                "isExtendedSchema": false,
+                "required": false,
+                "type": "string",
+                "controlType": "text"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "key": "message",
+        "name": "Message",
+        "hintText": "Message",
+        "helpText": "Message",
+        "isExtendedSchema": false,
+        "required": false,
+        "type": "string",
+        "controlType": "text"
+      },
+      {
+        "key": "status",
+        "name": "Status",
+        "hintText": "Status",
+        "helpText": "Status",
+        "isExtendedSchema": false,
+        "required": false,
+        "type": "string",
+        "controlType": "text"
+      }
+    ]
+  }
+]

@@ -126,39 +126,43 @@ const app = {
           controlType: "select",
           isExtendedSchema: true,
           dynamicPickList: "getAllModules", 
-          modules: []
         },
-        {
-          key: "workflowTrigger",
-          name: "Workflow Trigger",
-          hintText: "Set value to trigger the workflow rule while inserting a record into the CRM account.",
-          helpText: "Set value to trigger the workflow rule while inserting a record into the CRM account.",
-          required: true,
-          type: "string",
-          controlType: "select",
-          isExtendedSchema: false,
-          pickList: [
-            ["True", "true"],
-            ["False", "false"]
-          ], 
-        },
-        {
-          key: "triggerInputs",
-          name: "Trigger Inputs",
-          hintText: "The trigger inputs as a comma-separated value. The input can be workflow, approval, or blueprint.",
-          helpText: "The trigger inputs as a comma-separated value. The input can be workflow, approval, or blueprint.",
-          required: false,
-          type: "string",
-          controlType: "text",
-          isExtendedSchema: false,
-        },
+        // {
+        //   key: "workflowTrigger",
+        //   name: "Workflow Trigger",
+        //   hintText: "Set value to trigger the workflow rule while inserting a record into the CRM account.",
+        //   helpText: "Set value to trigger the workflow rule while inserting a record into the CRM account.",
+        //   required: true,
+        //   type: "string",
+        //   controlType: "select",
+        //   isExtendedSchema: false,
+        //   pickList: [
+        //     ["True", "true"],
+        //     ["False", "false"]
+        //   ], 
+        // },
+        // {
+        //   key: "triggerInputs",
+        //   name: "Trigger Inputs",
+        //   hintText: "The trigger inputs as a comma-separated value. The input can be workflow, approval, or blueprint.",
+        //   helpText: "The trigger inputs as a comma-separated value. The input can be workflow, approval, or blueprint.",
+        //   required: false,
+        //   type: "string",
+        //   controlType: "text",
+        //   isExtendedSchema: false,
+        // },
         
       ],
 
       execute: async (connection, input) => {
         try {
           let apiName = input.moduleName
-          let postBody = {};
+          delete input.moduleName;
+          
+          let postBody = { 
+            data: [input] 
+          };
+
           const url = `https://www.zohoapis.in/crm/v5/${apiName}`;
 
           const headers = app.connection.authorization.credentials(connection);
@@ -169,7 +173,8 @@ const app = {
             HttpUtils.HTTPMethods.POST,
             postBody
           );
-
+          // console.log(postBody);
+          // console.log(response)
           if (response.success === true) {
             return HttpUtils.successResponse(response.body);
           } else {
@@ -185,44 +190,32 @@ const app = {
         try {
           let apiName = input.moduleName
           let url = `https://www.zohoapis.in/crm/v5/settings/fields?module=${apiName}`;
-          // let url = `https://www.zohoapis.in/crm/v5/settings/fields?module=Leads`;
+          
           let headers = {
             "Authorization" : `Zoho-oauthtoken ${connection.oauthToken.accessToken}`
           }
-//           git init
-// git add .
-// git commit -m "first commit"
-// git branch -M main
-// git remote add origin "_git repository link here_"
-// git push -u origin main
+         
           let response = await HttpUtils.request(url, headers);
           if (response.success == true) {
             let intput_fields = [];
             let inputObj; 
 
-            let list = response.body.fields.map((item) => {
-              return item;
-            })
-            // let list = response.body.fields
-            //   .filter((fields) => fields.read_only === true).map((item) => {
-            //   return item;
-            // })
+            let list = response.body.fields
+            
             for(const res of list){
               inputObj = {};
               inputObj.key = res.api_name;
               inputObj.name = res.api_name;
-              inputObj.hintText = "hintText";
-              inputObj.helpText = "helpText";
+              inputObj.hintText = res.display_label;
+              inputObj.helpText = res.display_label;
               inputObj.required = res.system_mandatory;
-              inputObj.properties = undefined;
-              let properties = []
-              inputObj.properties = properties;
+              inputObj.type = "string"
+              inputObj.controlType = "text"
+              
+              intput_fields.push(inputObj);
             }
-            intput_fields.push(inputObj);
             
             // console.log(response.body)
-            // return HttpUtils.successResponse(list);
-            // moduleList.modules = intput_fields;
 
             let helpText = "Fills the values for placeholders in the template."
             return HttpUtils.successResponse({
@@ -237,9 +230,159 @@ const app = {
           return HttpUtils.errorResponse(error.message);
         }
       },
-      output_fields: () => [],
-        // app.objectDefinitions.event,
-
+      output_fields: () => [
+          {
+            "key": "data",
+            "name": "Data",
+            "hintText": "Data",
+            "helpText": "Data",
+            "isExtendedSchema": false,
+            "required": false,
+            "type": "array",
+            "controlType": "array",
+            "as": "object",
+            "properties": [
+              {
+                "key": "code",
+                "name": "Code",
+                "hintText": "Code",
+                "helpText": "Code",
+                "isExtendedSchema": false,
+                "required": false,
+                "type": "string",
+                "controlType": "text"
+              },
+              {
+                "key": "details",
+                "name": "Details",
+                "hintText": "Details",
+                "helpText": "Details",
+                "isExtendedSchema": false,
+                "required": false,
+                "type": "object",
+                "controlType": "object",
+                "properties": [
+                  {
+                    "key": "Modified_Time",
+                    "name": "Modified Time",
+                    "hintText": "Modified Time",
+                    "helpText": "Modified Time",
+                    "isExtendedSchema": false,
+                    "required": false,
+                    "type": "string",
+                    "controlType": "text"
+                  },
+                  {
+                    "key": "Modified_By",
+                    "name": "Modified By",
+                    "hintText": "Modified By",
+                    "helpText": "Modified By",
+                    "isExtendedSchema": false,
+                    "required": false,
+                    "type": "object",
+                    "controlType": "object",
+                    "properties": [
+                      {
+                        "key": "name",
+                        "name": "Name",
+                        "hintText": "Name",
+                        "helpText": "Name",
+                        "isExtendedSchema": false,
+                        "required": false,
+                        "type": "string",
+                        "controlType": "text"
+                      },
+                      {
+                        "key": "id",
+                        "name": "Id",
+                        "hintText": "Id",
+                        "helpText": "Id",
+                        "isExtendedSchema": false,
+                        "required": false,
+                        "type": "string",
+                        "controlType": "text"
+                      }
+                    ]
+                  },
+                  {
+                    "key": "Created_Time",
+                    "name": "Created Time",
+                    "hintText": "Created Time",
+                    "helpText": "Created Time",
+                    "isExtendedSchema": false,
+                    "required": false,
+                    "type": "string",
+                    "controlType": "text"
+                  },
+                  {
+                    "key": "id",
+                    "name": "Id",
+                    "hintText": "Id",
+                    "helpText": "Id",
+                    "isExtendedSchema": false,
+                    "required": false,
+                    "type": "string",
+                    "controlType": "text"
+                  },
+                  {
+                    "key": "Created_By",
+                    "name": "Created By",
+                    "hintText": "Created By",
+                    "helpText": "Created By",
+                    "isExtendedSchema": false,
+                    "required": false,
+                    "type": "object",
+                    "controlType": "object",
+                    "properties": [
+                      {
+                        "key": "name",
+                        "name": "Name",
+                        "hintText": "Name",
+                        "helpText": "Name",
+                        "isExtendedSchema": false,
+                        "required": false,
+                        "type": "string",
+                        "controlType": "text"
+                      },
+                      {
+                        "key": "id",
+                        "name": "Id",
+                        "hintText": "Id",
+                        "helpText": "Id",
+                        "isExtendedSchema": false,
+                        "required": false,
+                        "type": "string",
+                        "controlType": "text"
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "key": "message",
+                "name": "Message",
+                "hintText": "Message",
+                "helpText": "Message",
+                "isExtendedSchema": false,
+                "required": false,
+                "type": "string",
+                "controlType": "text"
+              },
+              {
+                "key": "status",
+                "name": "Status",
+                "hintText": "Status",
+                "helpText": "Status",
+                "isExtendedSchema": false,
+                "required": false,
+                "type": "string",
+                "controlType": "text"
+              }
+            ]
+          }
+        
+      ],
+    
       sample_output: (connection) => {},
     },
   },
@@ -278,8 +421,6 @@ const app = {
     } catch (error) {
       return HttpUtils.errorResponse(error.message);
     }
-  },
-  objectDefinitions: {
   },
   pickLists: {
     getAllModules: async(connection) => {

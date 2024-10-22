@@ -1,6 +1,9 @@
 # Node.js
 node_modules/
 
+# credentials file
+test/
+
 # Logs
 logs
 *.log
@@ -24,4 +27,3 @@ logs
 
 # Environment variables
 .env*
-
