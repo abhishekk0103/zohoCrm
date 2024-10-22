@@ -14,8 +14,8 @@ const app = {
   webhook_verification_required: false,
   internal: false,
   connection: {
-    client_id: "1000.VH4A39TNB5ZVDB0EIQ6AQWV7QCT7ZP",
-    client_secret: "9f77d98cabd86f494fde1d78607ad828c9b1e0562a",
+    client_id: "YOUR_CLIENT_ID",
+    client_secret: "YOUR_CLIENT_SECRET",
     redirect_uri:
       "https://automation.quickwork.co/staticwebhook/api/zohocrm/notify/5d6610b8ab254016bbf07286/code-exchange",
     authorization: {
